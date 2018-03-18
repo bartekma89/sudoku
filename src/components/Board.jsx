@@ -8,7 +8,9 @@ const Board = props => {
 			<Tile
 				key={index}
 				value={item === '.' ? '' : item}
-				disabled={item !== '.' ? true : false}
+				disabled={props.initialBoard[index] !== '.' ? true : false}
+				onChange={props.onUpdateTile.bind(this, index)}
+				correctAnswer={props.correctAnswer[index]}
 			/>
 		));
 
