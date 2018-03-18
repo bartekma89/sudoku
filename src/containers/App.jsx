@@ -12,16 +12,19 @@ class App extends React.Component {
 			initialBoard: '',
 			board: '',
 			answer: null,
+			boardsHistory: [],
 		};
 	}
 
 	componentDidMount() {
 		const initialBoard = sudoku.generate('easy', false);
 		const answer = initialBoard.split('').map(item => true);
+		const boardsHistory = [initialBoard];
 		this.setState({
 			initialBoard,
 			board: initialBoard,
 			answer,
+			boardsHistory,
 		});
 	}
 
@@ -31,6 +34,7 @@ class App extends React.Component {
 		this.setState({
 			initialBoard: initialBoard,
 			board: initialBoard,
+			boardsHistory: [initialBoard],
 		});
 	}
 
@@ -54,14 +58,32 @@ class App extends React.Component {
 
 	onUpdateTile(index, event) {
 		const value = event.target.value ? event.target.value : '.';
+
 		this.setState(prevState => {
 			return {
 				board:
 					prevState.board.slice(0, index) +
 					value +
 					prevState.board.slice(index + 1),
+
+				boardsHistory: [
+					...this.state.boardsHistory,
+					prevState.board.slice(0, index) +
+						value +
+						prevState.board.slice(index + 1),
+				],
 			};
 		});
+	}
+
+	onUndo(event) {
+		const boardsHistory = this.state.boardsHistory;
+		boardsHistory.splice(boardsHistory.length - 1, 1);
+		this.setState({
+			board: boardsHistory[boardsHistory.length - 1],
+			boardsHistory,
+		});
+		console.log(boardsHistory);
 	}
 
 	onCheck(event) {
@@ -81,6 +103,13 @@ class App extends React.Component {
 		return (
 			<div className="App">
 				<h1>Sudoku</h1>
+				<Button
+					title={'Undo'}
+					onAction={this.onUndo.bind(this)}
+					disabled={
+						this.state.boardsHistory.length > 1 ? false : true
+					}
+				/>
 				<Board
 					board={this.state.board}
 					initialBoard={this.state.initialBoard}
