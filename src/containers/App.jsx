@@ -12,19 +12,19 @@ class App extends React.Component {
 			initialBoard: '',
 			board: '',
 			answer: null,
-			boardsHistory: [],
+			boardsHistoryState: [],
 		};
 	}
 
 	componentDidMount() {
 		const initialBoard = sudoku.generate('easy', false);
 		const answer = initialBoard.split('').map(item => true);
-		const boardsHistory = [initialBoard];
+		const boardsHistoryState = [initialBoard];
 		this.setState({
 			initialBoard,
 			board: initialBoard,
 			answer,
-			boardsHistory,
+			boardsHistoryState,
 		});
 	}
 
@@ -34,7 +34,7 @@ class App extends React.Component {
 		this.setState({
 			initialBoard: initialBoard,
 			board: initialBoard,
-			boardsHistory: [initialBoard],
+			boardsHistoryState: [initialBoard],
 		});
 	}
 
@@ -66,8 +66,8 @@ class App extends React.Component {
 					value +
 					prevState.board.slice(index + 1),
 
-				boardsHistory: [
-					...this.state.boardsHistory,
+				boardsHistoryState: [
+					...this.state.boardsHistoryState,
 					prevState.board.slice(0, index) +
 						value +
 						prevState.board.slice(index + 1),
@@ -77,13 +77,12 @@ class App extends React.Component {
 	}
 
 	onUndo(event) {
-		const boardsHistory = this.state.boardsHistory;
-		boardsHistory.splice(boardsHistory.length - 1, 1);
+		const boardsHistoryState = this.state.boardsHistoryState;
+		boardsHistoryState.splice(boardsHistoryState.length - 1, 1);
 		this.setState({
-			board: boardsHistory[boardsHistory.length - 1],
-			boardsHistory,
+			board: boardsHistoryState[boardsHistoryState.length - 1],
+			boardsHistoryState,
 		});
-		console.log(boardsHistory);
 	}
 
 	onCheck(event) {
@@ -107,7 +106,7 @@ class App extends React.Component {
 					title={'Undo'}
 					onAction={this.onUndo.bind(this)}
 					disabled={
-						this.state.boardsHistory.length > 1 ? false : true
+						this.state.boardsHistoryState.length > 1 ? false : true
 					}
 				/>
 				<Board
