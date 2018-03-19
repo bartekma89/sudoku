@@ -4,11 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start":
-      "webpack-dev-server --hot --inline --open --config ./webpack.config.js",
+    "start": "webpack-dev-server --hot --inline --open --config ./webpack.config.js",
     "prebuild": "npm run clean",
-    "build":
-      "cross-env NODE_ENV=production webpack --config ./webpack.config.js",
+    "build": "cross-env NODE_ENV=production webpack --config ./webpack.config.js",
     "clean": "rimraf build"
   },
   "keywords": [],
@@ -36,6 +34,7 @@
   "dependencies": {
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "sudoku-umd": "^1.0.1"
+    "sudoku-umd": "^1.0.1",
+    "sweetalert": "^2.1.0"
   }
 }

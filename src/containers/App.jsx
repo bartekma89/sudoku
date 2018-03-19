@@ -1,5 +1,6 @@
 import React from 'react';
 import sudoku from 'sudoku-umd';
+import swal from 'sweetalert';
 
 import Button from '../components/Button.jsx';
 import Board from '../components/Board.jsx';
@@ -27,7 +28,6 @@ class App extends React.Component {
 			correctAnswer,
 			boardsHistoryState,
 		});
-		console.log(this.state.initialBoard);
 	}
 
 	onHandlerPrevent(event) {
@@ -43,7 +43,6 @@ class App extends React.Component {
 			boardsHistoryState: [initialBoard],
 			correctAnswer,
 		});
-		console.log(this.state.initialBoard);
 	}
 
 	onRestartBoard(event) {
@@ -65,7 +64,7 @@ class App extends React.Component {
 				board: sudoku.solve(this.state.initialBoard),
 			});
 		} else {
-			alert('Error(s) in solution. Try again');
+			swal('Error(s) in solution. Try again', { icon: 'error' });
 		}
 	}
 
@@ -110,6 +109,14 @@ class App extends React.Component {
 		this.setState({
 			correctAnswer,
 		});
+
+		if (solution.toString() === acuallyAnswer.toString()) {
+			swal({
+				title: 'Gratulation!',
+				text: 'You win!!!',
+				icon: 'success',
+			});
+		}
 	}
 
 	render() {
