@@ -3,6 +3,7 @@ import sudoku from 'sudoku-umd';
 
 import Button from '../components/Button.jsx';
 import Board from '../components/Board.jsx';
+import style from './App.css';
 
 class App extends React.Component {
 	constructor(props) {
@@ -100,7 +101,7 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<div className="App">
+			<div className={style.SudokuApp}>
 				<h1>Sudoku</h1>
 				<Button
 					title={'Undo'}
