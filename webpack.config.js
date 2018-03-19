@@ -8,23 +8,28 @@ let env = process.env.NODE_ENV || 'development';
 
 let plugins = [
 	new HtmlWebpackPlugin({
-		template: './src/index.html',
+		template: __dirname + '/src/index.html',
 		filename: 'index.html',
 		inject: 'body',
-	}),
-	new UglifyJsPlugin(),
-	new OptimizeJsPlugin({
-		sourceMap: false,
 	}),
 ];
 
 console.log('NODE_ENV: ', env);
 
+if (env === 'production') {
+	plugins.push(
+		new UglifyJsPlugin(),
+		new OptimizeJsPlugin({
+			sourceMap: false,
+		})
+	);
+}
+
 module.exports = {
 	entry: ['./src/index.jsx'],
 
 	devServer: {
-		contentBase: path.join(__dirname, 'build/'),
+		contentBase: path.join(__dirname, '/build/'),
 	},
 
 	output: {
