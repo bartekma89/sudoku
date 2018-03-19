@@ -1,4 +1,5 @@
 import React from 'react';
+import style from './Tile.css';
 
 const Tile = props => {
 	return (
@@ -6,10 +7,10 @@ const Tile = props => {
 			type="number"
 			min="1"
 			max="9"
-			style={
-				props.correctAnswer
-					? { backgroundColor: 'transparent' }
-					: { backgroundColor: 'red' }
+			className={
+				props.correctAswer === true
+					? style.correctValue
+					: style.wrongValue
 			}
 			{...props}
 		/>

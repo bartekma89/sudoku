@@ -12,36 +12,44 @@ class App extends React.Component {
 		this.state = {
 			initialBoard: '',
 			board: '',
-			answer: null,
+			correctAnswer: null,
 			boardsHistoryState: [],
 		};
 	}
 
 	componentDidMount() {
-		const initialBoard = sudoku.generate('easy', false);
-		const answer = initialBoard.split('').map(item => true);
+		const initialBoard = sudoku.generate('medium', false);
+		const correctAnswer = initialBoard.split('').map(item => true);
 		const boardsHistoryState = [initialBoard];
 		this.setState({
 			initialBoard,
 			board: initialBoard,
-			answer,
+			correctAnswer,
 			boardsHistoryState,
 		});
+		console.log(this.state.initialBoard);
 	}
 
 	onNewBoard(event) {
-		const initialBoard = sudoku.generate('easy', false);
-
+		const initialBoard = sudoku.generate('medium', false);
+		const correctAnswer = initialBoard.split('').map(item => true);
 		this.setState({
 			initialBoard: initialBoard,
 			board: initialBoard,
 			boardsHistoryState: [initialBoard],
+			correctAnswer,
 		});
+		console.log(this.state.initialBoard);
 	}
 
 	onRestartBoard(event) {
+		const correctAnswer = this.state.initialBoard
+			.split('')
+			.map(item => true);
 		this.setState({
 			board: this.state.initialBoard,
+			correctAnswer,
+			boardsHistoryState: [this.state.initialBoard],
 		});
 	}
 
@@ -58,6 +66,7 @@ class App extends React.Component {
 	}
 
 	onUpdateTile(index, event) {
+		event.preventDefault();
 		const value = event.target.value ? event.target.value : '.';
 
 		this.setState(prevState => {
@@ -90,18 +99,18 @@ class App extends React.Component {
 		const solution = sudoku.solve(this.state.initialBoard).split('');
 		const acuallyAnswer = this.state.board.split('');
 
-		const answer = acuallyAnswer.map(
+		const correctAnswer = acuallyAnswer.map(
 			(item, index) => item === solution[index]
 		);
 
 		this.setState({
-			answer,
+			correctAnswer,
 		});
 	}
 
 	render() {
 		return (
-			<div className={style.SudokuApp}>
+			<div>
 				<h1>Sudoku</h1>
 				<Button
 					title={'Undo'}
@@ -114,9 +123,9 @@ class App extends React.Component {
 					board={this.state.board}
 					initialBoard={this.state.initialBoard}
 					onUpdateTile={this.onUpdateTile.bind(this)}
-					correctAnswer={this.state.answer}
+					correctAnswer={this.state.correctAnswer}
 				/>
-				<div className="buttons">
+				<div className={style.buttons}>
 					<Button title="Check" onAction={this.onCheck.bind(this)} />
 					<Button
 						title="New Game"

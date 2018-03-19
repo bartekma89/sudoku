@@ -1,5 +1,6 @@
 import React from 'react';
 import Tile from './Tile.jsx';
+import style from './Board.css';
 
 const Board = props => {
 	const tiles = props.board
@@ -13,6 +14,7 @@ const Board = props => {
 				correctAnswer={props.correctAnswer[index]}
 			/>
 		));
+	console.log(props.correctAnswer);
 
 	return <form>{tiles}</form>;
 };

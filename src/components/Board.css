@@ -1,0 +1,8 @@
+form {
+	margin: 0 auto;
+	text-align: center;
+	display: grid;
+	grid-template-columns: repeat(9, 50px);
+	grid-template-rows: repeat(9, 50px);
+	grid-gap: 0.1rem;
+}
