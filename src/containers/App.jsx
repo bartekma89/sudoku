@@ -30,6 +30,10 @@ class App extends React.Component {
 		console.log(this.state.initialBoard);
 	}
 
+	onHandlerPrevent(event) {
+		event.preventDefault();
+	}
+
 	onNewBoard(event) {
 		const initialBoard = sudoku.generate('medium', false);
 		const correctAnswer = initialBoard.split('').map(item => true);
@@ -124,6 +128,7 @@ class App extends React.Component {
 					initialBoard={this.state.initialBoard}
 					onUpdateTile={this.onUpdateTile.bind(this)}
 					correctAnswer={this.state.correctAnswer}
+					onHandlerPrevent={this.onHandlerPrevent.bind(this)}
 				/>
 				<div className={style.buttons}>
 					<Button title="Check" onAction={this.onCheck.bind(this)} />

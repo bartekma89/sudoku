@@ -9,14 +9,13 @@ const Board = props => {
 			<Tile
 				key={index}
 				value={item === '.' ? '' : item}
+				correctAnswer={props.correctAnswer[index]}
 				disabled={props.initialBoard[index] !== '.' ? true : false}
 				onChange={props.onUpdateTile.bind(this, index)}
-				correctAnswer={props.correctAnswer[index]}
 			/>
 		));
-	console.log(props.correctAnswer);
 
-	return <form>{tiles}</form>;
+	return <form onSubmit={props.onHandlerPrevent}>{tiles}</form>;
 };
 
 export default Board;

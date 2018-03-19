@@ -8,9 +8,7 @@ const Tile = props => {
 			min="1"
 			max="9"
 			className={
-				props.correctAswer === true
-					? style.correctValue
-					: style.wrongValue
+				props.correctAnswer ? style.correctValue : style.wrongValue
 			}
 			{...props}
 		/>
