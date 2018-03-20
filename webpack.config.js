@@ -36,7 +36,7 @@ module.exports = {
 	devtool: 'eval',
 
 	output: {
-		publicPath: '/build',
+		publicPath: '/',
 		path: path.resolve(__dirname, 'build/'),
 		filename: 'app.bundle.js',
 	},
