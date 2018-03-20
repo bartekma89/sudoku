@@ -23,14 +23,8 @@ body {
 	max-width: 50%;
 }
 
-header {
-	position: relative;
-}
-
-span {
-	text-align: right;
+.gameLevel {
+	text-align: center;
 	font-weight: bold;
-	position: absolute;
-	right: 1%;
-	top: 70%;
+	margin: 5px;
 }

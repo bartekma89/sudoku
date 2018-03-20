@@ -136,6 +136,9 @@ class App extends React.Component {
 			<div>
 				<header>
 					<h1>Sudoku</h1>
+					<div className={style.gameLevel}>
+						Game level: {this.state.gameLevel}
+					</div>
 					<Button
 						title={'Undo'}
 						onAction={this.onUndo.bind(this)}
@@ -145,7 +148,6 @@ class App extends React.Component {
 								: true
 						}
 					/>
-					<span>Game level: {this.state.gameLevel}</span>
 				</header>
 				<Board
 					board={this.state.board}
