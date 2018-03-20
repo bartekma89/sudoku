@@ -8,7 +8,7 @@ let env = process.env.NODE_ENV || 'development';
 
 let plugins = [
 	new HtmlWebpackPlugin({
-		template: './src/index.html',
+		template: './index.html',
 		filename: 'index.html',
 		inject: 'body',
 	}),
@@ -26,7 +26,7 @@ if (env === 'production') {
 }
 
 module.exports = {
-	entry: ['react-hot-loader/patch', './src/index.jsx'],
+	entry: ['react-hot-loader/patch', './index.jsx'],
 
 	devServer: {
 		contentBase: path.join(__dirname, 'build'),
