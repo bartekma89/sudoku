@@ -1,5 +1,6 @@
 body {
-	box-sizing: border;
+	font-family: 'Arial', sans-serif;
+	box-sizing: border-box;
 	max-width: 60%;
 	margin: 0 auto;
 	display: flex;
@@ -10,4 +11,26 @@ body {
 
 .buttons {
 	margin: 2rem auto;
+}
+
+.inactive {
+	display: none;
+}
+
+.active {
+	display: block;
+	margin: 0 auto;
+	max-width: 50%;
+}
+
+header {
+	position: relative;
+}
+
+span {
+	text-align: right;
+	font-weight: bold;
+	position: absolute;
+	right: 1%;
+	top: 70%;
 }

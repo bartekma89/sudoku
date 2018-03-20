@@ -15,34 +15,26 @@ class App extends React.Component {
 			board: '',
 			correctAnswer: null,
 			boardsHistoryState: [],
+			isActive: false,
+			gameLevel: '',
 		};
 	}
 
 	componentDidMount() {
-		const initialBoard = sudoku.generate('medium', false);
+		const initialBoard = sudoku.generate('easy', false);
 		const correctAnswer = initialBoard.split('').map(item => true);
 		const boardsHistoryState = [initialBoard];
 		this.setState({
-			initialBoard,
+			initialBoard: initialBoard,
 			board: initialBoard,
 			correctAnswer,
 			boardsHistoryState,
+			gameLevel: 'easy',
 		});
 	}
 
 	onHandlerPrevent(event) {
 		event.preventDefault();
-	}
-
-	onNewBoard(event) {
-		const initialBoard = sudoku.generate('medium', false);
-		const correctAnswer = initialBoard.split('').map(item => true);
-		this.setState({
-			initialBoard: initialBoard,
-			board: initialBoard,
-			boardsHistoryState: [initialBoard],
-			correctAnswer,
-		});
 	}
 
 	onRestartBoard(event) {
@@ -64,7 +56,7 @@ class App extends React.Component {
 				board: sudoku.solve(this.state.initialBoard),
 			});
 		} else {
-			swal('Error(s) in solution. Try again', { icon: 'error' });
+			swal('Error(s) in solution', 'Try again', { icon: 'error' });
 		}
 	}
 
@@ -119,17 +111,42 @@ class App extends React.Component {
 		}
 	}
 
+	onNewBoard(gameLevel) {
+		const initialBoard = sudoku.generate(gameLevel, false);
+		const correctAnswer = initialBoard.split('').map(item => true);
+		this.setState({
+			initialBoard: initialBoard,
+			board: initialBoard,
+			boardsHistoryState: [initialBoard],
+			correctAnswer,
+		});
+	}
+
+	onSelectLevel(gameLevel, event) {
+		event.preventDefault();
+		this.setState({
+			gameLevel: gameLevel,
+			isActive: false,
+		});
+		this.onNewBoard(gameLevel);
+	}
+
 	render() {
 		return (
 			<div>
-				<h1>Sudoku</h1>
-				<Button
-					title={'Undo'}
-					onAction={this.onUndo.bind(this)}
-					disabled={
-						this.state.boardsHistoryState.length > 1 ? false : true
-					}
-				/>
+				<header>
+					<h1>Sudoku</h1>
+					<Button
+						title={'Undo'}
+						onAction={this.onUndo.bind(this)}
+						disabled={
+							this.state.boardsHistoryState.length > 1
+								? false
+								: true
+						}
+					/>
+					<span>Game level: {this.state.gameLevel}</span>
+				</header>
 				<Board
 					board={this.state.board}
 					initialBoard={this.state.initialBoard}
@@ -137,11 +154,14 @@ class App extends React.Component {
 					correctAnswer={this.state.correctAnswer}
 					onHandlerPrevent={this.onHandlerPrevent.bind(this)}
 				/>
+
 				<div className={style.buttons}>
 					<Button title="Check" onAction={this.onCheck.bind(this)} />
 					<Button
 						title="New Game"
-						onAction={this.onNewBoard.bind(this)}
+						onClick={() => {
+							return this.setState({ isActive: true });
+						}}
 					/>
 					<Button
 						title="Solve"
@@ -151,6 +171,41 @@ class App extends React.Component {
 						title="Restart"
 						onAction={this.onRestartBoard.bind(this)}
 					/>
+
+					<div
+						className={
+							this.state.isActive ? style.active : style.inactive
+						}
+					>
+						<h3>Select level</h3>
+						<Button
+							title="Easy"
+							onAction={this.onSelectLevel.bind(this, 'easy')}
+						/>
+						<Button
+							title="Medium"
+							onAction={this.onSelectLevel.bind(this, 'medium')}
+						/>
+						<Button
+							title="Hard"
+							onAction={this.onSelectLevel.bind(this, 'hard')}
+						/>
+						<Button
+							title="Very-hard"
+							onAction={this.onSelectLevel.bind(
+								this,
+								'very-hard'
+							)}
+						/>
+						<Button
+							title="Insane"
+							onAction={this.onSelectLevel.bind(this, 'insane')}
+						/>
+						<Button
+							title="Inhuman"
+							onAction={this.onSelectLevel.bind(this, 'inhuman')}
+						/>
+					</div>
 				</div>
 			</div>
 		);
