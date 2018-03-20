@@ -1,9 +1,0 @@
-form {
-	text-align: center;
-	margin: 1rem auto;
-	display: grid;
-	justify-content: center;
-	grid-template-columns: repeat(9, 50px);
-	grid-template-rows: repeat(9, 50px);
-	grid-gap: 0.1rem;
-}
